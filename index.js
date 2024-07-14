@@ -7,6 +7,7 @@ const functionCall = () => {
     let startButton = document.querySelector(".start");
     let pauseButton = document.querySelector(".pause");
     let countdown = null;
+    let resetButton = document.querySelector(".reset")
 
 
 
@@ -30,9 +31,14 @@ const functionCall = () => {
             Secs.value = Math.max(seconds, 0);
     }
     startButton.addEventListener("click", () => {
+        if (Hours.value == 0 && Mins.value == 0 && Secs.value == 0) {
+            return;
+        }
         Hours.disabled = true;
         Mins.disabled = true;
         Secs.disabled = true;
+        startButton.style.display="none";
+        pauseButton.style.display="inline";
         if (!countdown) {
             console.log("Countdown is null")
             countdown = setInterval(() => {
@@ -47,17 +53,21 @@ const functionCall = () => {
         Hours.disabled = false;
         Mins.disabled = false;
         Secs.disabled = false;
+        startButton.style.display="inline";
+        pauseButton.style.display="none";
         clearInterval(countdown);
         countdown = null;
 
     }
     pauseButton.addEventListener("click", () => {
         stopCountDown();
-
     })
-
-
-
+    resetButton.addEventListener("click",()=>{
+        stopCountDown();
+        Hours.value=0;
+        Mins.value=0;
+        Secs.value=0;
+    })
 
 }
 
